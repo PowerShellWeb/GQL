@@ -1,0 +1,16 @@
+query { 
+  viewer {
+    pullRequests {
+        totalCount
+    }
+    open: pullRequests(states:OPEN) {
+        totalCount
+    }
+    merged: pullRequests(states: MERGED) {
+        totalCount
+    }
+    closed: pullRequests(states:CLOSED) {
+        totalCount
+    }
+  }    
+}
