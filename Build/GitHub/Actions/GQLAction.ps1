@@ -1,12 +1,12 @@
 ﻿<#
 .Synopsis
-    GitHub Action for ugit
+    GitHub Action for GQL
 .Description
-    GitHub Action for ugit.  This will:
+    GitHub Action for GQL.  This will:
 
-    * Import ugit
+    * Import GQL
     * If `-Run` is provided, run that script
-    * Otherwise, unless `-SkipScriptFile` is passed, run all *.ugit.ps1 files beneath the workflow directory
+    * Otherwise, unless `-SkipScriptFile` is passed, run all *.GQL.ps1 files beneath the workflow directory
       * If any `-ActionScript` was provided, run scripts from the action path that match a wildcard pattern.
 
     If you will be making changes using the GitHubAPI, you should provide a -GitHubToken
@@ -16,13 +16,13 @@
 #>
 
 param(
-# A PowerShell Script that uses ugit.  
+# A PowerShell Script that uses GQL.  
 # Any files outputted from the script will be added to the repository.
 # If those files have a .Message attached to them, they will be committed with that message.
 [string]
 $Run,
 
-# If set, will not process any files named *.ugit.ps1
+# If set, will not process any files named *.GQL.ps1
 [switch]
 $SkipScriptFile,
 
@@ -82,7 +82,7 @@ $gitHubEvent   | Format-List | Out-Host
 
 
 $anyFilesChanged = $false
-$ActionModuleName = 'PSJekyll'
+$ActionModuleName = 'GQL'
 $actorInfo = $null
 
 
