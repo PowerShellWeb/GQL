@@ -1,0 +1,8 @@
+query getTypeField($typeName: String!){
+   __type(name:$typeName) {
+      fields {
+         name
+         description
+      }  
+   }
+}
