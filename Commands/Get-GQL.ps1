@@ -74,7 +74,14 @@ function Get-GQL
     # This can be useful for queries that would be run frequently, but change infrequently.
     [Parameter(ValueFromPipelineByPropertyName)]
     [switch]
-    $Cache
+    $Cache,
+
+    # If set, will refresh the cache.
+    # This can be useful to force an update of cached information.
+    # `-Refresh` implies `-Cache` (it just will not return an uncached value).
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [switch]
+    $Refresh
     )
 
     process {
@@ -150,12 +157,17 @@ function Get-GQL
             }
             #endregion Check for File or Cached Query
 
+            if ($PSBoundParameters['Refresh']) {
+                $Cache = $true
+            }
+
             if ($Cache -and -not $script:GraphQLOutputCache) {
                 $script:GraphQLOutputCache = [Ordered]@{}
             }
 
             if ($script:GraphQLOutputCache.$gqlQuery -and 
-                -not $Parameter.Count
+                -not $Parameter.Count -and 
+                -not $Refresh
             ) {
                 $script:GraphQLOutputCache.$gqlQuery
                 continue nextQuery
