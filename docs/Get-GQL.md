@@ -88,6 +88,14 @@ By decorating an object with one or more typenames, we can:
 |------------|--------|--------|-------------|---------------------------------------------------------------------------|
 |`[String[]]`|false   |6       |false        |Decorate<br/>Decoration<br/>PSTypeNames<br/>TypeName<br/>TypeNames<br/>Type|
 
+#### **Cache**
+If set, will cache the results of the query.
+This can be useful for queries that would be run frequently, but change infrequently.
+
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
+
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -WhatIf is used to see what would happen, or return operations without executing them
@@ -103,5 +111,5 @@ If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$co
 
 ### Syntax
 ```PowerShell
-Get-GQL [[-Query] <String[]>] [[-PersonalAccessToken] <String>] [[-GraphQLUri] <Uri>] [[-Parameter] <IDictionary>] [[-Header] <IDictionary>] [[-PSTypeName] <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-GQL [[-Query] <String[]>] [[-PersonalAccessToken] <String>] [[-GraphQLUri] <Uri>] [[-Parameter] <IDictionary>] [[-Header] <IDictionary>] [[-PSTypeName] <String[]>] [-Cache] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
