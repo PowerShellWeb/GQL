@@ -96,6 +96,15 @@ This can be useful for queries that would be run frequently, but change infreque
 |----------|--------|--------|---------------------|
 |`[Switch]`|false   |named   |true (ByPropertyName)|
 
+#### **Refresh**
+If set, will refresh the cache.
+This can be useful to force an update of cached information.
+`-Refresh` implies `-Cache` (it just will not return an uncached value).
+
+|Type      |Required|Position|PipelineInput        |
+|----------|--------|--------|---------------------|
+|`[Switch]`|false   |named   |true (ByPropertyName)|
+
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -WhatIf is used to see what would happen, or return operations without executing them
@@ -111,5 +120,5 @@ If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$co
 
 ### Syntax
 ```PowerShell
-Get-GQL [[-Query] <String[]>] [[-PersonalAccessToken] <String>] [[-GraphQLUri] <Uri>] [[-Parameter] <IDictionary>] [[-Header] <IDictionary>] [[-PSTypeName] <String[]>] [-Cache] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-GQL [[-Query] <String[]>] [[-PersonalAccessToken] <String>] [[-GraphQLUri] <Uri>] [[-Parameter] <IDictionary>] [[-Header] <IDictionary>] [[-PSTypeName] <String[]>] [-Cache] [-Refresh] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
