@@ -68,7 +68,13 @@ function Get-GQL
     # * Format the output object any way we want    
     [Alias('Decorate','Decoration','PSTypeNames','TypeName','TypeNames','Type')]
     [string[]]
-    $PSTypeName
+    $PSTypeName,
+
+    # If set, will cache the results of the query.
+    # This can be useful for queries that would be run frequently, but change infrequently.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [switch]
+    $Cache
     )
 
     process {
@@ -144,6 +150,17 @@ function Get-GQL
             }
             #endregion Check for File or Cached Query
 
+            if ($Cache -and -not $script:GraphQLOutputCache) {
+                $script:GraphQLOutputCache = [Ordered]@{}
+            }
+
+            if ($script:GraphQLOutputCache.$gqlQuery -and 
+                -not $Parameter.Count
+            ) {
+                $script:GraphQLOutputCache.$gqlQuery
+                continue nextQuery
+            }
+
             #region Run the Query
             $invokeSplat.Body = [Ordered]@{query = $gqlQuery}
             if ($Parameter) {
@@ -183,6 +200,9 @@ function Get-GQL
                         $gqlOutput.data.pstypenames.add($pstypename[$goBackwards])
                     }
                 }
+                if ($Cache) {
+                    $script:GraphQLOutputCache[$gqlQuery] = $gqlOutput.data
+                }
                 $gqlOutput.data
             }
             elseif ($gqlOutput) {
@@ -191,6 +211,9 @@ function Get-GQL
                     for ($goBackwards = $pstypename.Length - 1; $goBackwards -ge 0; $goBackwards--) {
                         $gqlOutput.pstypenames.add($pstypename[$goBackwards])
                     }
+                }
+                if ($Cache) {
+                    $script:GraphQLOutputCache[$gqlQuery] = $gqlOutput
                 }
                 $gqlOutput
             }
