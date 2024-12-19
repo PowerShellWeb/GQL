@@ -105,6 +105,12 @@ This can be useful to force an update of cached information.
 |----------|--------|--------|---------------------|
 |`[Switch]`|false   |named   |true (ByPropertyName)|
 
+#### **OutputPath**
+
+|Type        |Required|Position|PipelineInput        |
+|------------|--------|--------|---------------------|
+|`[String[]]`|false   |7       |true (ByPropertyName)|
+
 #### **WhatIf**
 -WhatIf is an automatic variable that is created when a command has ```[CmdletBinding(SupportsShouldProcess)]```.
 -WhatIf is used to see what would happen, or return operations without executing them
@@ -120,5 +126,5 @@ If the command sets a ```[ConfirmImpact("Medium")]``` which is lower than ```$co
 
 ### Syntax
 ```PowerShell
-Get-GQL [[-Query] <String[]>] [[-PersonalAccessToken] <String>] [[-GraphQLUri] <Uri>] [[-Parameter] <IDictionary>] [[-Header] <IDictionary>] [[-PSTypeName] <String[]>] [-Cache] [-Refresh] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-GQL [[-Query] <String[]>] [[-PersonalAccessToken] <String>] [[-GraphQLUri] <Uri>] [[-Parameter] <IDictionary>] [[-Header] <IDictionary>] [[-PSTypeName] <String[]>] [-Cache] [-Refresh] [[-OutputPath] <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
