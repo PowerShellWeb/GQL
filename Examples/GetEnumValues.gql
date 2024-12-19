@@ -1,4 +1,4 @@
-query getTypeValues($typeName: String!){
+query getEnumValues($typeName: String!){
    __type(name:$typeName) {
       name
       enumValues { name }
