@@ -1,0 +1,24 @@
+query getDiscussions($owner: String !, $repo: String !, $first: Int = 100){
+  repository(owner: $owner, name: $repo) {
+    discussions(first: $first) {
+      # type: DiscussionConnection
+      totalCount # Int!
+      edges {
+        # type: DiscussionEdge
+        cursor
+        node {
+          # type: Discussion          
+          number
+          title
+          updatedAt          
+          url          
+        }
+      }
+
+      nodes {
+        # type: Discussion
+        id
+      }
+    }
+  }
+}
