@@ -6,8 +6,7 @@ if (-not $env:ReadOnlyToken) {
 
 Push-Location $PSScriptRoot
 
-
 # First, let's get the query
-gql -Query ./GetSchemaTypes.gql -PersonalAccessToken $env:ReadOnlyToken -Cache -OutputPath ./GitHubGraphTypes.json
+gql -Query ./GetSchemaTypeNames.gql -PersonalAccessToken $env:ReadOnlyToken -Cache -OutputPath ./GetSchemaTypeNames.json
 
 Pop-Location
