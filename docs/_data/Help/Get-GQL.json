@@ -1,0 +1,44 @@
+{
+  "Synopsis": "Gets a GraphQL query.",
+  "Description": "Gets a GraphQL query and returns the results as a PowerShell object.",
+  "Parameters": [
+    {
+      "Name": null,
+      "Type": null,
+      "Description": "",
+      "Required": false,
+      "Position": 0,
+      "Aliases": null,
+      "DefaultValue": null,
+      "Globbing": false,
+      "PipelineInput": null,
+      "variableLength": false
+    }
+  ],
+  "Notes": [
+    null
+  ],
+  "CommandType": "Function",
+  "Component": [
+    null
+  ],
+  "Inputs": [
+    null
+  ],
+  "Outputs": [
+    null
+  ],
+  "Links": [],
+  "Examples": [
+    {
+      "Title": "EXAMPLE 1",
+      "Markdown": "Getting git sponsorship information from GitHub GraphQL.\n**To use this example, we'll need to provide `$MyPat` with a Personal Access Token.**        ",
+      "Code": "Get-GQL -Query ./Examples/GitSponsors.gql -PersonalAccessToken $myPat"
+    },
+    {
+      "Title": "EXAMPLE 2",
+      "Markdown": "We can decorate graph object results to customize them.\nLet's add a Sponsors property to the output object that returns the sponsor nodes.",
+      "Code": "Update-TypeData -TypeName 'GitSponsors' -MemberName 'Sponsors' -MemberType ScriptProperty -Value {\n    $this.viewer.sponsors.nodes\n} -Force\n\n# And let's add a Sponsoring property to the output object that returns the sponsoring nodes.\nUpdate-TypeData -TypeName 'GitSponsors' -MemberName 'Sponsoring' -MemberType ScriptProperty -Value {\n    $this.viewer.sponsoring.nodes\n} -Force\n\n# And let's display sponsoring and sponsors by default\nUpdate-TypeData -TypeName 'GitSponsors' -DefaultDisplayPropertySet 'Sponsors','Sponsoring' -Force\n\n# Now we can run the query and get the results.\nGet-GQL -Query ./Examples/GitSponsors.gql -PersonalAccessToken $myPat -PSTypeName 'GitSponsors' | \n    Select-Object -Property Sponsors,Sponsoring"
+    }
+  ]
+}

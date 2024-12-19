@@ -49,4 +49,3 @@ Get-GQL -Query ./Examples/GitSponsors.gql -PersonalAccessToken $myPat
 ~~~powershell
 # We can decorate graph object results to customize them.
 ~~~
-

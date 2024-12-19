@@ -1,0 +1,6 @@
+query getEnumValues($typeName: String!){
+   __type(name:$typeName) {
+      name
+      enumValues { name }
+   }
+}

@@ -1,0 +1,19 @@
+query getTiers($login: String!) {
+  user(login: $login) {
+      sponsorsListing {
+        tiers(first: 10) {
+          nodes {
+            name
+            description
+            descriptionHTML
+            id
+            isCustomAmount
+            isOneTime                                
+            monthlyPriceInCents
+            monthlyPriceInDollars                
+            updatedAt
+          }
+        }      
+    }
+  }
+}

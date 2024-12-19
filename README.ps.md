@@ -37,16 +37,20 @@ To connect to a GQL and get results, use [Get-GQL](Get-GQL.md), or, simply `GQL`
 
 ### More Examples
 
-#### Get-GQL Example 1
-
-~~~powershell
-# Getting git sponsorship information from GitHub GraphQL.
-# **To use this example, we'll need to provide `$MyPat` with a Personal Access Token.**        
-Get-GQL -Query ./Examples/GitSponsors.gql -PersonalAccessToken $myPat
+~~~PipeScript{
+Import-Module .\ 
+Get-Help Get-GQL | 
+    %{ $_.Examples.Example.code} |
+    % -Begin { $exampleCount = 0 } -Process {
+        $exampleCount++
+        @(
+            "#### Get-GQL Example $exampleCount" 
+            ''         
+            "~~~powershell"
+            $_
+            "~~~"
+            ''
+        ) -join [Environment]::Newline
+    }
+}
 ~~~
- #### Get-GQL Example 2
-
-~~~powershell
-# We can decorate graph object results to customize them.
-~~~
-

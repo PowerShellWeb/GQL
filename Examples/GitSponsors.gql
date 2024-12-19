@@ -1,0 +1,28 @@
+query {
+  viewer {
+    ... on Sponsorable {
+      sponsors(first: 100) {
+        totalCount        
+        nodes {
+          ... on User { 
+                login                
+            }
+          ... on Organization { 
+                login                
+            }
+        }
+      }
+      sponsoring(first: 100) {
+        totalCount        
+        nodes {
+            ... on User { 
+                login
+            }
+            ... on Organization { 
+                login                
+            }
+        }
+      }
+    }
+  }
+}

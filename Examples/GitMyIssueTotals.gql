@@ -1,0 +1,13 @@
+query { 
+  viewer {
+    issues {
+        totalCount
+    }
+    open: issues(states:OPEN) {
+        totalCount
+    }
+    closed: issues(states:CLOSED) {
+        totalCount
+    }    
+  }    
+}
