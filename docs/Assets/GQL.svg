@@ -20,5 +20,6 @@
     </svg>
   </symbol>
   <use href="#PowerShellWeb" height="60%" width="60%" x="20%" y="20%" />
+  <path stroke-width=".5em" stroke="#4488FF" fill="transparent" class="foreground-stroke" d="M 540 621 L 610.14805770654 580.5 L 610.14805770654 499.5 L 540 459 L 469.851942293461 499.5 L 469.85194229346 580.5 Z" />
   <text x="50%" y="80%" text-anchor="middle" font-family="Noto Sans" style="font-family:&quot;Noto Sans&quot;,sans-serif" font-size="4.2em" fill="#4488FF" class="foreground-fill" dominant-baseline="middle">GQL</text>
 </svg>
