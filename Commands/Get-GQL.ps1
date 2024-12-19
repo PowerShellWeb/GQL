@@ -81,7 +81,12 @@ function Get-GQL
     # `-Refresh` implies `-Cache` (it just will not return an uncached value).
     [Parameter(ValueFromPipelineByPropertyName)]
     [switch]
-    $Refresh
+    $Refresh,
+
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [ValidatePattern('\.json$')]
+    [string[]]
+    $OutputPath
     )
 
     process {
@@ -131,7 +136,9 @@ function Get-GQL
         #endregion Prepare the REST Parameters        
 
         #region Handle Each Query
+        $queryNumber = -1
         :nextQuery foreach ($gqlQuery in $Query) {
+            $queryNumber++
             $queryLines = @($gqlQuery -split '(?>\r\n|\n)')
             #region Check for File or Cached Query
             if ($queryLines.Length -eq 1) {                
@@ -146,9 +153,9 @@ function Get-GQL
                 } elseif ($query -match '[\\/]') {
                     $psCmdlet.WriteError(
                         [Management.Automation.ErrorRecord]::new(
-                            [Exception]::new("Query file not found: '$gqlQuery'"), 
-                            'NotFound', 
-                            'ObjectNotFound', 
+                            [Exception]::new("Query file not found: '$gqlQuery'"),
+                            'NotFound',
+                            'ObjectNotFound',
                             $gqlQuery
                         )
                     )
@@ -165,13 +172,24 @@ function Get-GQL
                 $script:GraphQLOutputCache = [Ordered]@{}
             }
 
-            if ($script:GraphQLOutputCache.$gqlQuery -and 
-                -not $Parameter.Count -and 
+            if ($script:GraphQLOutputCache.$gqlQuery -and
+                -not $Parameter.Count -and
                 -not $Refresh
             ) {
                 $script:GraphQLOutputCache.$gqlQuery
                 continue nextQuery
             }
+
+            $queryOutPath =
+                if ($OutputPath) {
+                    if ($OutputPath[$queryNumber]) {
+                        $OutputPath[$queryNumber]
+                    } else {
+                        $OutputPath[-1]
+                    }
+                }
+                
+
 
             #region Run the Query
             $invokeSplat.Body = [Ordered]@{query = $gqlQuery}
@@ -184,7 +202,7 @@ function Get-GQL
                 continue nextQuery
             }
             $invokeSplat.Body = ConvertTo-Json -InputObject $invokeSplat.Body -Depth 10
-            $shouldProcessMessage = "Querying $GraphQLUri with $gqlQuery"            
+            $shouldProcessMessage = "Querying $GraphQLUri with $gqlQuery"
             if (-not $PSCmdlet.ShouldProcess($shouldProcessMessage)) {
                 continue nextQuery
             }
@@ -192,8 +210,9 @@ function Get-GQL
             if ($gqlOutput -is [Management.Automation.ErrorRecord]) {
                 $PSCmdlet.WriteError($gqlOutput)
                 continue nextQuery
-            }            
-            elseif ($gqlOutput.errors) {
+            }
+            
+            if ($gqlOutput.errors) {
                 foreach ($gqlError in $gqlOutput.errors) {
                     $psCmdlet.WriteError((
                         [Management.Automation.ErrorRecord]::new(
@@ -205,33 +224,33 @@ function Get-GQL
                 }
                 continue nextQuery
             } 
-            elseif ($gqlOutput.data) {
-                if ($PSTypeName) {
-                    $gqlOutput.data.pstypenames.clear()
-                    for ($goBackwards = $pstypename.Length - 1; $goBackwards -ge 0; $goBackwards--) {
-                        $gqlOutput.data.pstypenames.add($pstypename[$goBackwards])
-                    }
-                }
-                if ($Cache) {
-                    $script:GraphQLOutputCache[$gqlQuery] = $gqlOutput.data
-                }
-                $gqlOutput.data
+                        
+            if ($gqlOutput.data) {                
+                $gqlOutput = $gqlOutput.data                
             }
-            elseif ($gqlOutput) {
-                if ($PSTypeName) {
-                    $gqlOutput.pstypenames.clear()
-                    for ($goBackwards = $pstypename.Length - 1; $goBackwards -ge 0; $goBackwards--) {
-                        $gqlOutput.pstypenames.add($pstypename[$goBackwards])
-                    }
+                        
+            if (-not $gqlOutput) {
+                continue nextQuery
+            }
+
+            if ($PSTypeName) {
+                $gqlOutput.pstypenames.clear()
+                for ($goBackwards = $pstypename.Length - 1; $goBackwards -ge 0; $goBackwards--) {
+                    $gqlOutput.pstypenames.add($pstypename[$goBackwards])
                 }
-                if ($Cache) {
-                    $script:GraphQLOutputCache[$gqlQuery] = $gqlOutput
-                }
+            }
+            if ($Cache) {
+                $script:GraphQLOutputCache[$gqlQuery] = $gqlOutput
+            }
+            if ($queryOutPath) {
+                New-Item -ItemType File -Path $queryOutPath -Force -Value (
+                    ConvertTo-Json -Depth 100 -InputObject $gqlOutput
+                )
+            } else {
                 $gqlOutput
-            }
+            }            
             #endregion Run the Query
             #endregion Handle Each Query
-
         }
     }
 }
