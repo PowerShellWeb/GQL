@@ -504,6 +504,9 @@ jobs:
         uses: StartAutomating/EZOut@master
       - name: UseHelpOut
         uses: StartAutomating/HelpOut@master
+      - name: Run GQL (on branch)
+        uses: ./
+        id: ActionOnBranch
       - name: Log in to ghcr.io
         uses: docker/login-action@master
         with: 

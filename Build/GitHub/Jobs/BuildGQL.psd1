@@ -23,12 +23,11 @@
         },        
         'RunEZOut',
         'RunHelpOut'
-        <#@{
-            name = 'Run HtmxPS (on branch)'
-            if   = '${{github.ref_name != ''main''}}'
+        @{
+            name = 'Run GQL (on branch)'            
             uses = './'
             id = 'ActionOnBranch'
-        },#>
+        },
         'BuildAndPublishContainer'
     )
 }
