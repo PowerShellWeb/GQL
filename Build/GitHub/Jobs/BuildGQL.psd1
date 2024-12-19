@@ -27,6 +27,9 @@
             name = 'Run GQL (on branch)'            
             uses = './'
             id = 'ActionOnBranch'
+            env = @{
+                GitHubToken = '${{ secrets.GitHubToken }}'
+            }
         },
         'BuildAndPublishContainer'
     )

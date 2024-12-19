@@ -507,6 +507,8 @@ jobs:
       - name: Run GQL (on branch)
         uses: ./
         id: ActionOnBranch
+        env: 
+          GitHubToken: ${{ secrets.GitHubToken }}
       - name: Log in to ghcr.io
         uses: docker/login-action@master
         with: 
