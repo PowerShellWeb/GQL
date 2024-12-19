@@ -8,6 +8,6 @@ Push-Location $PSScriptRoot
 
 
 # First, let's get the query
-gql -Query ./GetSchemaTypes.gql -PersonalAccessToken $env:GitHubToken -Cache -OutputPath ./GitHubGraphTypes.json
+gql -Query ./GetSchemaTypes.gql -PersonalAccessToken $env:ReadOnlyToken -Cache -OutputPath ./GitHubGraphTypes.json
 
 Pop-Location

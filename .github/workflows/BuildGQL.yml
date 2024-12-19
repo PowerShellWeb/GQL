@@ -509,7 +509,6 @@ jobs:
         id: ActionOnBranch
         env: 
           ReadOnlyToken: ${{ secrets.READ_ONLY_TOKEN }}
-          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Log in to ghcr.io
         uses: docker/login-action@master
         with: 
