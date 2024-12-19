@@ -3,6 +3,6 @@ query getTypeField($typeName: String!){
       fields {
          name
          description
-      }  
+      }
    }
 }
