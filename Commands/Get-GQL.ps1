@@ -168,15 +168,15 @@ function Get-GQL
                 $Cache = $true
             }
 
+            $queryCacheKey = "$gqlQuery$(if ($Parameter) { $Parameter | ConvertTo-Json -Depth 10})"
             if ($Cache -and -not $script:GraphQLOutputCache) {
                 $script:GraphQLOutputCache = [Ordered]@{}
             }
 
-            if ($script:GraphQLOutputCache.$gqlQuery -and
-                -not $Parameter.Count -and
+            if ($script:GraphQLOutputCache.$queryCacheKey -and                
                 -not $Refresh
             ) {
-                $script:GraphQLOutputCache.$gqlQuery
+                $script:GraphQLOutputCache.$queryCacheKey
                 continue nextQuery
             }
 
@@ -240,7 +240,7 @@ function Get-GQL
                 }
             }
             if ($Cache) {
-                $script:GraphQLOutputCache[$gqlQuery] = $gqlOutput
+                $script:GraphQLOutputCache[$queryCacheKey] = $gqlOutput
             }
             if ($queryOutPath) {
                 New-Item -ItemType File -Path $queryOutPath -Force -Value (
