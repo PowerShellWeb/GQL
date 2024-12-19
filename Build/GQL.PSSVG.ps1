@@ -86,12 +86,21 @@ foreach ($variant in '','Animated') {
         ) -ViewBox 0, 0, 200, 200 -TransformOrigin 50%, 50%
     )
 
+    $shapeSplat = [Ordered]@{
+        CenterX=(1080/2)
+        CenterY=(1080/2)
+        Radius=((1080 * .15) /2)
+    }
+
+
     svg -Content @(
         SVG.GoogleFont -FontName $fontName
         $symbolDefinition
         SVG.Use -Href '#PowerShellWeb' -Height 60% -Width 60% -X 20% -Y 20%
         # svg.use -Href '#psChevron' -Y 75.75% -X 14% @fillParameters -Height 7.5%
         # svg.use -Href '#psChevron' -Y 75.75% -X 14% @fillParameters -Height 7.5% -TransformOrigin '50% 50%' -Transform 'scale(-1 1)'
+        SVG.Hexagon @shapeSplat -StrokeWidth .5em -Stroke '#4488FF' -Fill 'transparent' -Class 'foreground-stroke' 
+        # SVG.ConvexPolygon -SideCount 3 @shapeSplat -Rotate 180 -StrokeWidth .25em -Stroke '#4488FF' -Fill 'transparent' -Class 'foreground-stroke'  -Opacity .3
         SVG.text -X 50% -Y 80% -TextAnchor middle -FontFamily $fontName -Style "font-family:`"$fontName`",sans-serif" -FontSize 4.2em -Fill '#4488FF' -Content 'GQL' -Class 'foreground-fill'  -DominantBaseline middle
     ) -OutputPath $outputPath -ViewBox 0, 0, 1080, 1080
 }
