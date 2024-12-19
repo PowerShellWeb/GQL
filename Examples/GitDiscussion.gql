@@ -1,0 +1,52 @@
+query getDiscussions($owner: String !, $repo: String !, $number: Int !){
+  repository(owner: $owner, name: $repo) {
+    discussion(number: $number) {
+        # type: Discussion
+        number
+        title
+        publishedAt
+        author {            
+            login
+            url
+        }
+        editor {
+            login
+            url
+        }
+        body
+        bodyHTML
+        bodyText
+        category {
+            createdAt
+            name
+            emoji
+            emojiHTML
+            slug
+            updatedAt
+        }
+        closed
+        closedAt
+        createdAt
+        createdViaEmail
+        isAnswered
+        answerChosenBy {
+            login
+            url
+        }
+        locked
+        publishedAt
+        poll {
+            question
+            options(first: 10) {
+              nodes {
+                  id
+                  option
+                  totalVoteCount
+              }
+            }
+        }
+        
+        url
+    }
+  }
+}
