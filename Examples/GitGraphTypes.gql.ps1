@@ -1,12 +1,12 @@
 #requires -Module GQL
-if (-not $env:GitHubToken) {
-    Write-Warning "No GitHubToken found."
+if (-not $env:ReadOnlyToken) {
+    Write-Warning "No ReadOnlyToken found."
     return
 }
 
 Push-Location $PSScriptRoot
 
 # First, let's get the query
-gql -Query ./GetSchemaTypes.gql -PersonalAccessToken $env:GitHubToken -Cache -OutputPath ./GitHubGraphTypes.json
+gql -Query ./GetSchemaTypes.gql -PersonalAccessToken $env:ReadOnlyToken -Cache -OutputPath ./GitHubGraphTypes.json
 
 Pop-Location

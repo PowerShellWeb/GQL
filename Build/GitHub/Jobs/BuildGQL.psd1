@@ -28,7 +28,7 @@
             uses = './'
             id = 'ActionOnBranch'
             env = @{
-                GitHubToken = '${{ secrets.READ_ONLY_TOKEN }}'
+                ReadOnlyToken = '${{ secrets.READ_ONLY_TOKEN }}'
             }
         },
         'BuildAndPublishContainer'
