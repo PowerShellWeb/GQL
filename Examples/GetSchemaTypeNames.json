@@ -4781,6 +4781,9 @@
         "name": "UserListSuggestion"
       },
       {
+        "name": "UserNamespaceRepository"
+      },
+      {
         "name": "UserStatus"
       },
       {
