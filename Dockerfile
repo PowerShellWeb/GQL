@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/powershell AS powershell
 
 # Set the module name to the name of the module we are building
-ENV ModuleName=HtmxPS
+ENV ModuleName=GQL
 ENV InstallAptGet="git","curl","ca-certificates","libc6","libgcc1"
 ENV InstallModule="ugit"
 # Copy the module into the container
