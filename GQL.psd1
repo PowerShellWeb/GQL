@@ -1,5 +1,5 @@
 @{
-    ModuleVersion = '0.1'
+    ModuleVersion = '0.1.1'
     RootModule = 'GQL.psm1'
     Guid = '9bf5c922-9f36-4c52-a7b6-d435837d4fa9'
     Author = 'James Brundage'
@@ -12,11 +12,10 @@
             ProjectURI = 'https://github.com/PowerShellWeb/GQL'
             LicenseURI = 'https://github.com/PowerShellWeb/GQL/blob/main/LICENSE'
             ReleaseNotes = @'            
-## GQL 0.1
+## GQL 0.1.1
 
-* Initial Release of GQL
-* One Simple Command for GraphQL: `Get-GQL` (or `GQL`)
-* Container and GitHub action included!
+* Fixing Container Build (#38, #39)
+* Adding SECURITY.md (#17)
 
 ---
 
