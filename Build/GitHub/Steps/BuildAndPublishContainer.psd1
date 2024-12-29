@@ -32,6 +32,10 @@
         'images'='${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}'
         'flavor'='latest=true'
     }
+    env = @{
+        REGISTRY = 'ghcr.io'
+        IMAGE_NAME = '${{ github.repository }}'
+    }
 }
 @{
     name = 'Build and push Docker image (from main)'
